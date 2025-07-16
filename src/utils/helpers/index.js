@@ -1,4 +1,7 @@
-module.exports.generateRandomColorLight = () => {
+import { StatusCodes } from 'http-status-codes';
+import { ErrorResponse } from '../common';
+
+export const generateRandomColorLight = () => {
   const colors = [
     '#F06D85',
     '#2EB6C9',
@@ -13,7 +16,18 @@ module.exports.generateRandomColorLight = () => {
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
-module.exports.asyncHandler = () => {
-  try {
-  } catch (error) {}
+export const asyncHandler = (fn) => {
+  return async (req, res, next) => {
+    try {
+      await fn(req, res, next);
+    } catch (error) {
+      const errorResponse = ErrorResponse();
+      errorResponse.error = error;
+      errorResponse.message = error.message || 'Something went wrong';
+
+      return res
+        .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
+        .json(errorResponse);
+    }
+  };
 };

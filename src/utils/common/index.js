@@ -1,6 +1,11 @@
-module.exports = {
-  SuccessResponse: require('./successResponse.js'),
-  ErrorResponse: require('./errorResponse.js'),
-  Enums: require('./enum.js'),
-  Common: require('./comman.js')
+import SuccessResponse from './successResponse.js';
+import ErrorResponse from './errorResponse.js';
+import Enums from './enum.js';
+import Common from './comman.js';
+
+export default {
+  SuccessResponse,
+  ErrorResponse,
+  Enums,
+  Common
 };

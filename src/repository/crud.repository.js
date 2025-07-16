@@ -1,5 +1,5 @@
-const { StatusCodes } = require('http-status-codes');
-const AppError = require('../utils/errors/appError.js');
+import { StatusCodes } from 'http-status-codes';
+import AppError from '../utils/errors/appError.js';
 
 class CrudRepository {
   constructor(model) {
@@ -25,4 +25,4 @@ class CrudRepository {
   }
 }
 
-module.exports = CrudRepository;
+export default CrudRepository;
