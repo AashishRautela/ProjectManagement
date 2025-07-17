@@ -1,5 +1,6 @@
 import { app } from './app.js';
 import { connectDB } from './config/index.js';
+import './queues/otp.worker.js';
 
 const PORT = process.env.PORT || 3001;
 connectDB()
