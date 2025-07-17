@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
-import { ErrorResponse } from '../common';
+import { ErrorResponse } from '../common/index.js';
 
 export const generateRandomColorLight = () => {
   const colors = [

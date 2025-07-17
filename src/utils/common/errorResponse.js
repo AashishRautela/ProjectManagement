@@ -1,8 +1,8 @@
-const defaultErrorResponse = () => ({
+const ErrorResponse = () => ({
   success: false,
   message: 'Something went wrong',
   data: {},
   error: {}
 });
 
-export default defaultErrorResponse;
+export default ErrorResponse;

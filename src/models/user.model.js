@@ -12,9 +12,8 @@ const userSchema = mongoose.Schema(
     },
     lastName: {
       type: String,
-      required: true,
-      maxlength: [15, 'Second Name can not be more than 15 characters'],
-      trim: true
+      trim: true,
+      default: ''
     },
     email: {
       type: String,
