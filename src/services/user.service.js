@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import AppError from '../utils/errors/appError.js';
 import { UserRepository } from '../repository/index.js';
+import { getDataFromRedis } from './redis.service.js';
 
 export const createUser = async (data) => {
   try {
@@ -11,13 +12,31 @@ export const createUser = async (data) => {
         StatusCodes.BAD_REQUEST
       );
     }
-    const userObj = user.toObject();
-    delete userObj.password;
-    return userObj;
+    return;
   } catch (error) {
     console.log('error -->', error);
     if (error instanceof AppError) throw error;
 
+    throw new AppError(
+      ['Something went wrong while creating user'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const verifyAndRegisterUser = async (data) => {
+  try {
+    const storedOtp = await getDataFromRedis(data.email);
+
+    if (storedOtp != data.otp) {
+      throw new AppError(['Invalid otp'], StatusCodes.BAD_REQUEST);
+    }
+    const user = await UserRepository.verifyUser(data.email);
+    delete user.password;
+    return;
+  } catch (error) {
+    console.log('error -->', error);
+    if (error instanceof AppError) throw error;
     throw new AppError(
       ['Something went wrong while creating user'],
       StatusCodes.INTERNAL_SERVER_ERROR

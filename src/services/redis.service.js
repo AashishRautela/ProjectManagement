@@ -12,10 +12,10 @@ const redis = new Redis({
 });
 
 // Set OTP with expiry
-export const setOtpInRedis = async (email, otp, expiryInSeconds = 300) => {
+export const setDataInRedis = async (key, value, expiryInSeconds = 300) => {
   try {
-    const response = await redis.set(email, otp, 'EX', expiryInSeconds);
-    return response; // Returns "OK" on success
+    const response = await redis.set(key, value, 'EX', expiryInSeconds);
+    return response;
   } catch (error) {
     console.error('❌ Redis SET error:', error);
     throw error;
@@ -23,9 +23,9 @@ export const setOtpInRedis = async (email, otp, expiryInSeconds = 300) => {
 };
 
 // Get OTP
-export const getOtpFromRedis = async (email) => {
+export const getDataFromRedis = async (key) => {
   try {
-    return await redis.get(email);
+    return await redis.get(key);
   } catch (error) {
     console.error('❌ Redis GET error:', error);
     throw error;
@@ -33,9 +33,9 @@ export const getOtpFromRedis = async (email) => {
 };
 
 // Delete OTP after verification
-export const deleteOtpFromRedis = async (email) => {
+export const deleteDataFromRedis = async (key) => {
   try {
-    return await redis.del(email);
+    return await redis.del(key);
   } catch (error) {
     console.error('❌ Redis DEL error:', error);
     throw error;

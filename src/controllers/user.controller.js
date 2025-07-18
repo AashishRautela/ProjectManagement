@@ -8,14 +8,20 @@ import { sendOtpJob } from '../queues/otp.queue.js';
 export const createUser = asyncHandler(async (req, res) => {
   const data = req.body;
   const otp = randomInt(100000, 999999).toString();
-  const otpRes = await sendOtpJob({ email: req.body.email, otp: otp });
-  console.log('otpRes-->', otpRes);
-  const user = await UserService.createUser(data);
+  await sendOtpJob({ email: req.body.email, otp: otp });
+  await UserService.createUser(data);
 
   const successResponse = SuccessResponse();
-  successResponse.data = user;
+  successResponse.message = 'Otp is sent to your email.Please Verify';
 
   return res.status(StatusCodes.CREATED).json(successResponse);
 });
 
-export const verifyUser = asyncHandler(async (req, res) => {});
+export const verifyUser = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+  const user = await UserService.verifyAndRegisterUser({ email, otp });
+
+  const successResponse = SuccessResponse();
+  successResponse.data = {};
+  return res.status(StatusCodes.CREATED).json(successResponse);
+});

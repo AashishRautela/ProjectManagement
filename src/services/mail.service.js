@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { setDataInRedis } from './redis.service.js';
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -22,6 +23,7 @@ export const sendEmail = async (data) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
+    await setDataInRedis(data.email, data.otp);
     console.log('✅ Email sent:', info.response);
     return true;
   } catch (error) {
