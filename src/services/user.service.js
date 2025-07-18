@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import AppError from '../utils/errors/appError.js';
 import { UserRepository } from '../repository/index.js';
-import { getDataFromRedis } from './redis.service.js';
+import { deleteDataFromRedis, getDataFromRedis } from './redis.service.js';
 
 export const createUser = async (data) => {
   try {
@@ -32,6 +32,7 @@ export const verifyAndRegisterUser = async (data) => {
       throw new AppError(['Invalid otp'], StatusCodes.BAD_REQUEST);
     }
     const user = await UserRepository.verifyUser(data.email);
+    await deleteDataFromRedis(data.email);
     delete user.password;
     return;
   } catch (error) {
