@@ -25,3 +25,5 @@ export const verifyUser = asyncHandler(async (req, res) => {
   successResponse.data = {};
   return res.status(StatusCodes.CREATED).json(successResponse);
 });
+
+export const getUserDetails = asyncHandler(async (req, res) => {});

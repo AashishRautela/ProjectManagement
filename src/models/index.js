@@ -1,2 +1,3 @@
 import User from './user.model.js';
-export { User };
+import Project from './project.model.js';
+export { User, Project };

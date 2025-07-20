@@ -1,0 +1,86 @@
+import mongoose from 'mongoose';
+
+const projectSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Project name is required'],
+      unique: true,
+      trim: true,
+      minlength: [3, 'Project name must be at least 3 characters'],
+      maxlength: [50, 'Project name must be less than 50 characters']
+    },
+    key: {
+      type: String,
+      trim: true,
+      uppercase: true,
+      minlength: [2, 'Key must be at least 2 characters'],
+      maxlength: [10, 'Key must be less than 10 characters']
+    },
+    status: {
+      type: String,
+      enum: ['backlog', 'active', 'on-hold', 'completed', 'archived'],
+      default: 'active'
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    manager: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    defaultAssignee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    description: {
+      type: String,
+      trim: true,
+      maxlength: [1000, 'Description cannot exceed 1000 characters'],
+      default: ''
+    },
+    startDate: {
+      type: Date
+    },
+    endDate: {
+      type: Date,
+      validate: {
+        validator: function (value) {
+          // only validate if both dates exist
+          return !this.startDate || !value || value > this.startDate;
+        },
+        message: 'End date must be after start date'
+      }
+    },
+    projectIcon: {
+      type: String,
+      trim: true,
+      default: ''
+    }
+  },
+  { timestamps: true }
+);
+
+projectSchema.pre('save', function (next) {
+  if (!this.key && this.name) {
+    const words = this.name.trim().split(/\s+/);
+    const acronym = words
+      .map((w) => w[0])
+      .join('')
+      .toUpperCase();
+    this.key = acronym.substring(0, 10);
+  }
+  next();
+});
+
+const Project = new mongoose.model('Project', projectSchema);
+export default Project;
