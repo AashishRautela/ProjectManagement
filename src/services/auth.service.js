@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { UserRepository } from '../repository/index.js';
 import AppError from '../utils/errors/appError.js';
-import { User } from '../models/index.js';
+import SuccessResponse from '../utils/common/successResponse.js';
 
 export const login = async (data) => {
   try {

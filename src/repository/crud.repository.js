@@ -31,6 +31,11 @@ class CrudRepository {
     const response = this.model.findOne(data);
     return response;
   }
+
+  async findByPk(data) {
+    const response = this.model.findById(data);
+    return response;
+  }
 }
 
 export default CrudRepository;

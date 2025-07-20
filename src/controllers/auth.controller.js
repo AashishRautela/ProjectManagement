@@ -24,3 +24,13 @@ export const login = asyncHandler(async (req, res) => {
 
   return res.status(StatusCodes.OK).send(successResponse);
 });
+
+export const logout = (req, res) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+
+  const successResponse = SuccessResponse();
+  successResponse.message = 'User logged out';
+
+  return res.status(StatusCodes.OK).json(successResponse);
+};

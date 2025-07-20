@@ -13,14 +13,7 @@ app.use(express.static('public'));
 import routes from './routes/index.js';
 
 // mount routes
-app.use(
-  '/',
-  (req, res, next) => {
-    console.log('--->1', req.body);
-    next();
-  },
-  routes
-);
+app.use('/', routes);
 
 // ✅ Export app
 export { app };
