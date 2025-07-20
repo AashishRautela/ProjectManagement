@@ -65,7 +65,7 @@ userSchema.methods.generateAccessToken = async function () {
     {
       _id: this?._id
     },
-    process.env.JWT_KEY,
+    process.env.JWT_SECRET_KEY,
     {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRE
     }

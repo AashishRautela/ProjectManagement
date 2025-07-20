@@ -17,6 +17,10 @@ class UserRepository extends CrudRepository {
     );
     return response;
   }
+
+  async findOneWithPassword(filter) {
+    return await this.model.findOne(filter).select('+password');
+  }
 }
 
 export default new UserRepository();

@@ -5,6 +5,17 @@ import { deleteDataFromRedis, getDataFromRedis } from './redis.service.js';
 
 export const createUser = async (data) => {
   try {
+    const email = data.email;
+
+    // check if user exists
+    const isUserExist = await UserRepository.findOne({ email });
+    if (isUserExist) {
+      throw new AppError(
+        ['User exists with same email'],
+        StatusCodes.BAD_REQUEST
+      );
+    }
+
     const user = await UserRepository.create(data);
     if (!user) {
       throw new AppError(
@@ -31,6 +42,7 @@ export const verifyAndRegisterUser = async (data) => {
     if (storedOtp != data.otp) {
       throw new AppError(['Invalid otp'], StatusCodes.BAD_REQUEST);
     }
+
     const user = await UserRepository.verifyUser(data.email);
     await deleteDataFromRedis(data.email);
     delete user.password;
