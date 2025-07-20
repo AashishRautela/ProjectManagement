@@ -1,6 +1,3 @@
-import { StatusCodes } from 'http-status-codes';
-import { ErrorResponse } from '../common/index.js';
-
 export const generateRandomColorLight = () => {
   const colors = [
     '#F06D85',
@@ -21,13 +18,7 @@ export const asyncHandler = (fn) => {
     try {
       await fn(req, res, next);
     } catch (error) {
-      const errorResponse = ErrorResponse();
-      errorResponse.error = error;
-      errorResponse.message = error.message || 'Something went wrong';
-
-      return res
-        .status(error.statusCode || StatusCodes.INTERNAL_SERVER_ERROR)
-        .json(errorResponse);
+      next(error);
     }
   };
 };

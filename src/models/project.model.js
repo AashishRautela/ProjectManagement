@@ -14,6 +14,7 @@ const projectSchema = mongoose.Schema(
       type: String,
       trim: true,
       uppercase: true,
+      unique: true,
       minlength: [2, 'Key must be at least 2 characters'],
       maxlength: [10, 'Key must be less than 10 characters']
     },
@@ -45,7 +46,7 @@ const projectSchema = mongoose.Schema(
     description: {
       type: String,
       trim: true,
-      maxlength: [1000, 'Description cannot exceed 1000 characters'],
+      maxlength: [500, 'Description cannot exceed 1000 characters'],
       default: ''
     },
     startDate: {
@@ -71,12 +72,18 @@ const projectSchema = mongoose.Schema(
 
 projectSchema.pre('save', function (next) {
   if (!this.key && this.name) {
-    const words = this.name.trim().split(/\s+/);
-    const acronym = words
-      .map((w) => w[0])
-      .join('')
-      .toUpperCase();
-    this.key = acronym.substring(0, 10);
+    const trimmed = this.name.trim();
+    const words = trimmed.split(/\s+/);
+
+    if (words.length === 1 && trimmed.length <= 4) {
+      this.key = trimmed.toUpperCase();
+    } else {
+      const acronym = words
+        .map((w) => w[0])
+        .join('')
+        .toUpperCase();
+      this.key = acronym.substring(0, 10);
+    }
   }
   next();
 });

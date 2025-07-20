@@ -6,9 +6,9 @@ class CrudRepository {
     this.model = model;
   }
 
-  async create(data) {
-    const response = await this.model.create(data);
-    return response;
+  async create(data, options = {}) {
+    const response = await this.model.create([data], options);
+    return response[0];
   }
 
   async get(data) {
