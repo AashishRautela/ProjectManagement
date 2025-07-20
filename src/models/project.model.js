@@ -82,5 +82,5 @@ projectSchema.pre('save', function (next) {
   next();
 });
 
-const Project = new mongoose.model('Project', projectSchema);
+const Project = mongoose.model('Project', projectSchema);
 export default Project;
