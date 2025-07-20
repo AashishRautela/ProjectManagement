@@ -55,7 +55,6 @@ const projectSchema = mongoose.Schema(
       type: Date,
       validate: {
         validator: function (value) {
-          // only validate if both dates exist
           return !this.startDate || !value || value > this.startDate;
         },
         message: 'End date must be after start date'
