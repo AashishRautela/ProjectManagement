@@ -9,3 +9,5 @@ export const createProject = asyncHandler(async (req, res) => {
   await ProjectService.create(req.body, user);
   return res.status(StatusCodes.CREATED).send(successResponse);
 });
+
+export const getProjectDetails = asyncHandler(async (req, res) => {});

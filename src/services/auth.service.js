@@ -10,6 +10,10 @@ export const login = async (data) => {
       throw new AppError(['User not found'], StatusCodes.BAD_REQUEST);
     }
 
+    if (!user.isVerified) {
+      throw new AppError(['User not found'], StatusCodes.BAD_REQUEST);
+    }
+
     const isPasswordValid = await user.validatePassword(password);
     if (!isPasswordValid) {
       throw new AppError(['Email or password is wrong'], StatusCodes.NOT_FOUND);
