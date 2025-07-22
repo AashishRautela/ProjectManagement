@@ -36,6 +36,11 @@ class CrudRepository {
     const response = this.model.findById(data);
     return response;
   }
+
+  async insertMany(data = []) {
+    const response = await this.model.insertMany(data);
+    return response;
+  }
 }
 
 export default CrudRepository;
