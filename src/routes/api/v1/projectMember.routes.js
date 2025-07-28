@@ -16,4 +16,12 @@ router.post(
   ProjectMemberController.addMember
 );
 
+// remove member
+router.delete(
+  '/:memberId',
+  AuthMiddleware.authenticateUser,
+  AuthorizeAccess.authorizeAccess({ module: 'member', action: 'remove' }),
+  ProjectMemberController.removeMember
+);
+
 export default router;

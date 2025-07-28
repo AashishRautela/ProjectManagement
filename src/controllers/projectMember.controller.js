@@ -10,3 +10,15 @@ export const addMember = asyncHandler(async (req, res) => {
   successResponse.data = {};
   return res.status(StatusCodes.CREATED).json(successResponse);
 });
+
+export const removeMember = asyncHandler(async (req, res) => {
+  const successResponse = SuccessResponse();
+  const { memberId } = req.params;
+  const { projectId } = req.userRole;
+  await ProjectMemberService.removeMember({ projectId, memberId });
+  return res.status(StatusCodes.CREATED).json(successResponse);
+});
+
+export const getMembersList = asyncHandler(async (req, res) => {
+  const successResponse = SuccessResponse();
+});

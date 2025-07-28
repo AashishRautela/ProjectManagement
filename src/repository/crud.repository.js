@@ -41,6 +41,14 @@ class CrudRepository {
     const response = await this.model.insertMany(data);
     return response;
   }
+
+  async findByIdAndDelete(data) {
+    const response = await this.model.findByIdAndDelete(data);
+    if (!response) {
+      throw new AppError(['Resouce Not found'], StatusCodes.NOT_FOUND);
+    }
+    return response;
+  }
 }
 
 export default CrudRepository;

@@ -64,7 +64,8 @@ export const authorizeAccess = ({ module, action }) => {
 
       req.userRole = {
         role: role.name,
-        permissions: role.permissions
+        permissions: role.permissions,
+        projectId
       };
 
       next();
