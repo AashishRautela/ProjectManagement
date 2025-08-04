@@ -83,3 +83,23 @@ export const create = async (data, user) => {
     if (session) session.endSession();
   }
 };
+
+export const getProjectDetails = async (data) => {
+  try {
+    const project = await ProjectRepository.findByPk(data);
+
+    if (!project) {
+      throw new AppError(['Project Not found'], StatusCodes.NOT_FOUND);
+    }
+
+    return project;
+  } catch (error) {
+    console.error('error -->', error);
+
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      ['Something went wrong while getting project details'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};

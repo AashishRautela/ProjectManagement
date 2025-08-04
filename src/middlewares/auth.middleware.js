@@ -43,7 +43,7 @@ export const authenticateUser = async (req, res, next) => {
   if (!accessToken) {
     errorResponse.message = 'Authentication failed';
     errorResponse.error = new AppError(
-      ['Access token not found'],
+      ['Unauthorized Request'],
       StatusCodes.UNAUTHORIZED
     );
     return res.status(StatusCodes.UNAUTHORIZED).json(errorResponse);

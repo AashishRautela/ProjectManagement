@@ -10,4 +10,12 @@ export const createProject = asyncHandler(async (req, res) => {
   return res.status(StatusCodes.CREATED).send(successResponse);
 });
 
-export const getProjectDetails = asyncHandler(async (req, res) => {});
+export const getProjectDetails = asyncHandler(async (req, res) => {
+  const { projectId } = req.params;
+  const successResponse = SuccessResponse();
+
+  const project = await ProjectService.getProjectDetails(projectId);
+
+  successResponse.data = project;
+  return res.status(StatusCodes.OK).send(successResponse);
+});
