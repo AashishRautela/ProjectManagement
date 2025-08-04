@@ -1,7 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import AppError from '../utils/errors/appError.js';
-import { ProjectMemberRepository } from '../repository/index.js';
-import { ErrorResponse } from '../utils/common/index.js';
+import {
+  ProjectMemberRepository,
+  ProjectRepository
+} from '../repository/index.js';
 
 export const addMember = async (data, user) => {
   try {
@@ -32,13 +34,30 @@ export const addMember = async (data, user) => {
 
 export const removeMember = async (data) => {
   try {
-    const removedMember = await ProjectMemberRepository.findByIdAndDelete(data);
+    await ProjectMemberRepository.findByIdAndDelete(data);
     return;
   } catch (error) {
     console.log('error -->1', error);
     if (error instanceof AppError) throw error;
     throw new AppError(
       ['Something went wrong while removing member'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const getMembers = async (data) => {
+  try {
+    await ProjectRepository.findByPk(data); //if project is not present error will be from repository
+
+    // fetch members
+    const members = await ProjectMemberRepository.getMembersList(data);
+    return members;
+  } catch (error) {
+    console.log('error -->1', error);
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      ['Something went wrong while geting members list'],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }

@@ -16,6 +16,14 @@ router.post(
   ProjectMemberController.addMember
 );
 
+// get membersList
+router.get(
+  '/:projectId',
+  AuthMiddleware.authenticateUser,
+  AuthorizeAccess.authorizeAccess({ module: 'member', action: 'view' }),
+  ProjectMemberController.getMembersList
+);
+
 // remove member
 router.delete(
   '/:memberId',

@@ -18,6 +18,15 @@ class ProjectMemberRepository extends CrudRepository {
     }
     return response;
   }
+
+  async getMembersList(data) {
+    const members = await ProjectMember.find({
+      project: data
+    })
+      .populate('user role')
+      .select('-project -updatedBy -addedBy');
+    return members;
+  }
 }
 
 export default new ProjectMemberRepository();
