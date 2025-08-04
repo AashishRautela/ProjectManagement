@@ -22,3 +22,13 @@ export const asyncHandler = (fn) => {
     }
   };
 };
+
+export const getFieldToUpdate = (allowedfields, fieldsToUpdate) => {
+  const fieldsToBeUpdated = allowedfields.reduce((acc, field) => {
+    if (Object.keys(fieldsToUpdate).includes(field)) {
+      acc[field] = fieldsToUpdate[field];
+    }
+    return acc;
+  }, {});
+  return fieldsToBeUpdated;
+};

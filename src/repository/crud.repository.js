@@ -52,6 +52,14 @@ class CrudRepository {
     }
     return response;
   }
+
+  async findByIdAndUpdate(id, data) {
+    const response = await this.model.findByIdAndUpdate(id, data);
+    if (!response) {
+      throw new AppError(['Resouce Not found'], StatusCodes.NOT_FOUND);
+    }
+    return response;
+  }
 }
 
 export default CrudRepository;

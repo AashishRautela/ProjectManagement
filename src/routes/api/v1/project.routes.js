@@ -22,4 +22,11 @@ router.get(
   ProjectController.getProjectDetails
 );
 
+router.patch(
+  '/:projectId',
+  AuthMiddleware.authenticateUser,
+  AuthorizeAccess.authorizeAccess({ module: 'project', action: 'edit' }),
+  ProjectController.updateProject
+);
+
 export default router;

@@ -6,6 +6,7 @@ import {
 } from '../repository/index.js';
 import AppError from '../utils/errors/appError.js';
 import mongoose from 'mongoose';
+import { getFieldToUpdate } from '../utils/helpers/index.js';
 
 export const create = async (data, user) => {
   let session;
@@ -99,6 +100,26 @@ export const getProjectDetails = async (data) => {
     if (error instanceof AppError) throw error;
     throw new AppError(
       ['Something went wrong while getting project details'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const updateProject = async (id, data) => {
+  try {
+    const allowedfields = ['name', 'description', 'defaultAssignee', 'manager'];
+    const fieldsToBeUpdated = getFieldToUpdate(allowedfields, data);
+    const project = await ProjectRepository.findByIdAndUpdate(
+      id,
+      fieldsToBeUpdated
+    );
+    return project;
+  } catch (error) {
+    console.error('error -->', error);
+
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      ['Something went wrong while updating project'],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
