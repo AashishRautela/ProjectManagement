@@ -29,4 +29,11 @@ router.patch(
   ProjectController.updateProject
 );
 
+router.delete(
+  '/:projectId',
+  AuthMiddleware.authenticateUser,
+  AuthorizeAccess.authorizeAccess({ module: 'project', action: 'delete' }),
+  ProjectController.deleteProject
+);
+
 export default router;

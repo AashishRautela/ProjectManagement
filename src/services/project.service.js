@@ -124,3 +124,17 @@ export const updateProject = async (id, data) => {
     );
   }
 };
+
+export const deleteProject = async (data) => {
+  try {
+    await ProjectRepository.findByIdAndDelete(data);
+  } catch (error) {
+    console.error('error -->', error);
+
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      ['Something went wrong while deleting project'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};

@@ -1,5 +1,6 @@
 import CrudRepository from './crud.repository.js';
 import { Project } from '../models/index.js';
+import AppError from '../utils/errors/appError.js';
 
 class ProjectRepository extends CrudRepository {
   constructor() {
