@@ -41,7 +41,7 @@ export const authenticateUser = async (req, res, next) => {
   const errorResponse = ErrorResponse();
 
   if (!accessToken) {
-    errorResponse.message = 'Authentication failed';
+    errorResponse.message = 'Authentication failed.Please Login first';
     errorResponse.error = new AppError(
       ['Unauthorized Request'],
       StatusCodes.UNAUTHORIZED

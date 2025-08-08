@@ -56,3 +56,16 @@ export const verifyAndRegisterUser = async (data) => {
     );
   }
 };
+
+export const getUserDetails = async (data) => {
+  try {
+    const user = await UserRepository.findByPk(data);
+    return user;
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new AppError(
+      ['Something went wrong while creating user'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};

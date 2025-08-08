@@ -26,4 +26,11 @@ export const verifyUser = asyncHandler(async (req, res) => {
   return res.status(StatusCodes.CREATED).json(successResponse);
 });
 
-export const getUserDetails = asyncHandler(async (req, res) => {});
+export const getUserDetails = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const successResponse = SuccessResponse();
+
+  const user = await UserService.getUserDetails(id);
+  successResponse.data = user;
+  return res.status(StatusCodes.CREATED).json(successResponse);
+});
