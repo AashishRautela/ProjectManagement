@@ -4,6 +4,7 @@ import * as ProjectMiddleware from './project.middleware.js';
 import * as AuthorizeAccess from './authorizeAccess.middleware.js';
 import * as ProjectMemberMiddleware from './projectMember.middleware.js';
 import * as EpicMiddleware from './epic.middleware.js';
+import * as IssueMiddleware from './issue.middleware.js';
 
 export {
   UserMiddleware,
@@ -11,5 +12,6 @@ export {
   ProjectMiddleware,
   AuthorizeAccess,
   ProjectMemberMiddleware,
-  EpicMiddleware
+  EpicMiddleware,
+  IssueMiddleware
 };

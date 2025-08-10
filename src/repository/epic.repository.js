@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { Epic } from '../models/index.js';
 import CrudRepository from './crud.repository.js';
+import AppError from '../utils/errors/appError.js';
 
 class EpicRepository extends CrudRepository {
   constructor() {

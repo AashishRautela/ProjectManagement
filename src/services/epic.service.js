@@ -14,11 +14,10 @@ export const createEpic = async (data, user) => {
     }
 
     if (!reporter) {
-      const defaultReporter = project.maanger;
+      const defaultReporter = project.manager;
       reporter = defaultReporter?._id;
     }
     const key = await ProjectRepository.reserveIssueKey(data.projectId, {});
-    console.log('key-->', key);
     const payload = {
       title: data.title,
       project: data.projectId,

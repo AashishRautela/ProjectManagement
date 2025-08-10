@@ -12,6 +12,7 @@ app.use(express.static('public'));
 
 // import routes
 import routes from './routes/index.js';
+import { StatusCodes } from 'http-status-codes';
 
 // mount routes
 app.use('/', routes);

@@ -3,11 +3,13 @@ import * as AuthController from './auth.controller.js';
 import * as ProjectController from './project.controller.js';
 import * as ProjectMemberController from './projectMember.controller.js';
 import * as EpicController from './epic.controller.js';
+import * as IssueController from './issue.controller.js';
 
 export {
   UserController,
   AuthController,
   ProjectController,
   ProjectMemberController,
-  EpicController
+  EpicController,
+  IssueController
 };
