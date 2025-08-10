@@ -39,6 +39,44 @@ class IssueRepository extends CrudRepository {
     }
     return response;
   }
+
+  async find(filters, { page, limit, sort }) {
+    const skip = (page - 1) * limit;
+
+    const select =
+      '-project -parent -id -epic -createdBy -updatedBy -reporter -description -spentEstimate -overrunMinutes -remainingEstimate -updatedAt -createdAt -attachments -watchers -labels';
+
+    const [response, total] = await Promise.all([
+      this.model
+        .find(filters)
+        .populate([
+          {
+            path: 'assignee',
+            select: '-isVerified -createdAt -updatedAt -email -__v'
+          },
+          { path: 'stage', select: '_id name color' }
+        ])
+        .select(select)
+        .skip(skip)
+        .sort(sort)
+        .limit(limit),
+      this.model.countDocuments(filters)
+    ]);
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      data: response,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1
+      }
+    };
+  }
 }
 
 export default new IssueRepository();

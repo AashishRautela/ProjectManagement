@@ -18,6 +18,13 @@ router.post(
 );
 
 router.get(
+  '/',
+  // AuthMiddleware.authenticateUser,
+  // AuthorizeAccess.authorizeAccess({ module, action: 'view' }),
+  IssueController.getIssues
+);
+
+router.get(
   '/:id/:projectId',
   AuthMiddleware.authenticateUser,
   AuthorizeAccess.authorizeAccess({ module, action: 'view' }),

@@ -73,3 +73,32 @@ export const getIssueDetails = async (data) => {
     );
   }
 };
+
+export const getIssues = async (query) => {
+  try {
+    const page = query.page || 1;
+    const limit = query.limit || 10;
+    const sort = { updatedAt: -1 };
+    const customFilters = {};
+    if (query.type) {
+      customFilters.type = {
+        $in: Array.isArray(query.type) ? query.type : [query.type]
+      };
+    }
+    customFilters.project = query.projectId;
+    const { data, meta } = await IssueRepository.find(customFilters, {
+      page,
+      limit,
+      sort
+    });
+    return { data, meta };
+  } catch (error) {
+    console.log('error in issue details--->', error);
+    if (error instanceof AppError) throw error;
+
+    throw new AppError(
+      ['Something went wrong while getting issues'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};

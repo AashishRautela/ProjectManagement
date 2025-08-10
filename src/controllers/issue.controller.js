@@ -20,3 +20,12 @@ export const getIssueDetails = asyncHandler(async (req, res) => {
   successResponse.data = issue;
   return res.status(StatusCodes.CREATED).send(successResponse);
 });
+
+export const getIssues = asyncHandler(async (req, res) => {
+  const successResponse = SuccessResponse();
+  const { data, meta } = await IssueService.getIssues(req.query);
+
+  successResponse.data = data;
+  successResponse.meta = meta;
+  return res.status(StatusCodes.CREATED).send(successResponse);
+});

@@ -12,7 +12,8 @@ export const authorizeAccess = ({ module, action }) => {
 
     try {
       const user = req.user;
-      const projectId = req.params.projectId || req.body.projectId;
+      const projectId =
+        req.params.projectId || req.body.projectId || req.query.projectId;
 
       if (!projectId) {
         errorResponse.message = 'Access validation failed';
