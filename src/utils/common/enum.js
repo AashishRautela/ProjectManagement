@@ -5,3 +5,10 @@ export const PRIORITY = {
   CRITICAL: 'critical',
   BLOCKER: 'blocker'
 };
+
+export const ISSUE = {
+  STORY: 'story',
+  TASK: 'task',
+  SUBTASK: 'subTask',
+  BUG: 'bug'
+};
