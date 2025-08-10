@@ -28,7 +28,7 @@ export const createIssue = async (data, user) => {
       type: data.type,
       project: data.projectId,
       epic: data.epic || null,
-      epic: data.epic || null,
+      parent: data.parent || null,
       priority: data.priority || priority.MEDIUM,
       createdBy: user._id,
       updatedBy: user._id,

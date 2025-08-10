@@ -25,7 +25,6 @@ class ProjectRepository extends CrudRepository {
   }
 
   async reserveIssueKey(projectId, options = {}) {
-    console.log('projectId---->', projectId);
     return await Project.reserveIssueKey(projectId);
   }
 }
