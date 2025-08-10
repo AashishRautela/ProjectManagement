@@ -80,9 +80,32 @@ export const getIssues = async (query) => {
     const limit = query.limit || 10;
     const sort = { updatedAt: -1 };
     const customFilters = {};
+
+    // issue type filter
     if (query.type) {
       customFilters.type = {
         $in: Array.isArray(query.type) ? query.type : [query.type]
+      };
+    }
+
+    //priotity filter
+    if (query.priority) {
+      customFilters.priority = {
+        $in: Array.isArray(query.priority) ? query.priority : [query.priority]
+      };
+    }
+
+    //stage filter
+    if (query.stage) {
+      customFilters.stage = {
+        $in: Array.isArray(query.stage) ? query.stage : [query.stage]
+      };
+    }
+
+    //assinee filter
+    if (query.assignee) {
+      customFilters.assignee = {
+        $in: Array.isArray(query.assignee) ? query.assignee : [query.assignee]
       };
     }
     customFilters.project = query.projectId;
