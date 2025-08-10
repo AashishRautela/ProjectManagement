@@ -23,6 +23,11 @@ class ProjectRepository extends CrudRepository {
     }
     return response;
   }
+
+  async reserveIssueKey(projectId, options = {}) {
+    console.log('projectId---->', projectId);
+    return await Project.reserveIssueKey(projectId);
+  }
 }
 
 export default new ProjectRepository();

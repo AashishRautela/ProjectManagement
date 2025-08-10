@@ -20,7 +20,7 @@ export const createUser = async (data) => {
     if (!user) {
       throw new AppError(
         ['Something went wrong while create user'],
-        StatusCodes.BAD_REQUEST
+        StatusCodes.INTERNAL_SERVER_ERROR
       );
     }
     return;

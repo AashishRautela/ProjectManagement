@@ -65,6 +65,11 @@ const projectSchema = mongoose.Schema(
       type: String,
       trim: true,
       default: ''
+    },
+    issueSeq: {
+      type: Number,
+      default: 0,
+      min: 0
     }
   },
   { timestamps: true }
@@ -87,6 +92,15 @@ projectSchema.pre('save', function (next) {
   }
   next();
 });
+
+projectSchema.statics.reserveIssueKey = async function (projectId) {
+  const doc = await this.findByIdAndUpdate(
+    projectId,
+    { $inc: { issueSeq: 1 } },
+    { new: true, select: 'key issueSeq' }
+  );
+  return `${doc.key}-${doc.issueSeq}`;
+};
 
 const Project = mongoose.model('Project', projectSchema);
 export default Project;

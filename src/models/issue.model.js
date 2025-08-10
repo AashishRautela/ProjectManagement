@@ -40,7 +40,13 @@ const issueSchema = new mongoose.Schema(
       maxlength: [50, 'Title can not be more than 50 characters'],
       trim: true
     },
-
+    key: {
+      type: String,
+      required: true,
+      maxlength: [10, 'Key can not be more than 10 characters'],
+      unique: true,
+      index: true
+    },
     type: {
       type: String,
       required: true,

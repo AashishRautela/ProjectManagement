@@ -8,13 +8,16 @@ const epicSchema = mongoose.Schema(
     title: {
       type: String,
       required: true,
+      minLegth: [10, 'Title must have atleast 50 characters'],
       maxlength: [50, 'Title can not be more than 50 characters'],
       trim: true
     },
     key: {
       type: String,
       required: true,
-      maxlength: [10, 'Key can not be more than 10 characters']
+      maxlength: [10, 'Key can not be more than 10 characters'],
+      unique: true,
+      index: true
     },
     summary: {
       type: String
@@ -42,7 +45,7 @@ const epicSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    defaultAssignee: {
+    assignee: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },

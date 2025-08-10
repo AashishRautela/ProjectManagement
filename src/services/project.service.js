@@ -2,11 +2,16 @@ import { StatusCodes } from 'http-status-codes';
 import {
   ProjectRepository,
   ProjectMemberRepository,
-  RoleRepository
+  RoleRepository,
+  StageRepository
 } from '../repository/index.js';
 import AppError from '../utils/errors/appError.js';
 import mongoose from 'mongoose';
-import { getFieldToUpdate } from '../utils/helpers/index.js';
+import {
+  generateRandomColorLight,
+  getFieldToUpdate
+} from '../utils/helpers/index.js';
+import { FULL_STAGE_TEMPLATE } from '../utils/constants/index.js';
 
 export const create = async (data, user) => {
   let session;
@@ -68,6 +73,21 @@ export const create = async (data, user) => {
       };
 
       await ProjectMemberRepository.create(memberPayload, { session });
+
+      const stagePayload = FULL_STAGE_TEMPLATE.map((stage) => {
+        return {
+          project: createdProject._id,
+          name: stage.name,
+          category: stage.category,
+          order: stage.order,
+          isDefault: stage.isDefault,
+          color: generateRandomColorLight(),
+          createdBy: user._id,
+          updatedBy: user._id
+        };
+      });
+
+      await StageRepository.insertMany(stagePayload, session);
     });
 
     return;

@@ -40,8 +40,8 @@ class CrudRepository {
     return response;
   }
 
-  async insertMany(data = []) {
-    const response = await this.model.insertMany(data);
+  async insertMany(data = [], options = {}) {
+    const response = await this.model.insertMany(data, options);
     return response;
   }
 
