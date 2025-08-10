@@ -3,7 +3,6 @@ import { EpicRepository, ProjectRepository } from '../repository/index.js';
 import AppError from '../utils/errors/appError.js';
 
 export const createEpic = async (data, user) => {
-  console.log('data--->', data);
   try {
     let assignee = data.assignee;
     let reporter = data.reporter;
@@ -48,6 +47,21 @@ export const createEpic = async (data, user) => {
 
     throw new AppError(
       ['Something went wrong while creating epic'],
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+};
+
+export const getEpicDetails = async (data) => {
+  try {
+    const epic = await EpicRepository.findByPk(data);
+    return epic;
+  } catch (error) {
+    console.log('error in epic details--->', error);
+    if (error instanceof AppError) throw error;
+
+    throw new AppError(
+      ['Something went wrong while getting epic details'],
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }

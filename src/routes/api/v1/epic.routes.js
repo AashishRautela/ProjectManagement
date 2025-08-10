@@ -8,12 +8,20 @@ import {
 import express from 'express';
 const router = express.Router();
 
+const module = 'task';
 router.post(
   '/',
   AuthMiddleware.authenticateUser,
-  AuthorizeAccess.authorizeAccess({ module: 'task', action: 'create' }),
+  AuthorizeAccess.authorizeAccess({ module, action: 'create' }),
   EpicMiddleware.validateCreateEpicRequest,
   EpicController.createEpic
+);
+
+router.get(
+  '/:id/:projectId',
+  AuthMiddleware.authenticateUser,
+  AuthorizeAccess.authorizeAccess({ module, action: 'view' }),
+  EpicController.getEpicDetails
 );
 
 export default router;

@@ -19,7 +19,7 @@ class ProjectRepository extends CrudRepository {
     ]);
 
     if (!response) {
-      throw new AppError(['Resouce Not found'], StatusCodes.NOT_FOUND);
+      throw new AppError(['Project Not found'], StatusCodes.NOT_FOUND);
     }
     return response;
   }

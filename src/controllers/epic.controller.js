@@ -10,3 +10,12 @@ export const createEpic = asyncHandler(async (req, res) => {
   await EpicService.createEpic(req.body, user);
   return res.status(StatusCodes.CREATED).send(successResponse);
 });
+
+export const getEpicDetails = asyncHandler(async (req, res) => {
+  const successResponse = SuccessResponse();
+  const { id } = req.params;
+  const epic = await EpicService.getEpicDetails(id);
+
+  successResponse.data = epic;
+  return res.status(StatusCodes.CREATED).send(successResponse);
+});
