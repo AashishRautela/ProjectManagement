@@ -27,5 +27,9 @@ app.use((err, req, res, next) => {
     .json(errorResponse);
 });
 
+app.get('/', (req, res) => {
+  return res.status(200).send('server is running');
+});
+
 // ✅ Export app
 export { app };
