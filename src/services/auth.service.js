@@ -7,16 +7,19 @@ export const login = async (data) => {
     const { email, password } = data;
     const user = await UserRepository.findOneWithPassword({ email });
     if (!user) {
-      throw new AppError(['User not found'], StatusCodes.BAD_REQUEST);
+      throw new AppError(['User not found'], StatusCodes.NOT_FOUND);
     }
 
     if (!user.isVerified) {
-      throw new AppError(['User not found'], StatusCodes.BAD_REQUEST);
+      throw new AppError(['User not found'], StatusCodes.NOT_FOUND);
     }
 
     const isPasswordValid = await user.validatePassword(password);
     if (!isPasswordValid) {
-      throw new AppError(['Email or password is wrong'], StatusCodes.NOT_FOUND);
+      throw new AppError(
+        ['Email or password is wrong'],
+        StatusCodes.BAD_REQUEST
+      );
     }
 
     const accessToken = await user.generateAccessToken();
